@@ -25,6 +25,6 @@ if nargout > 0
     hGUI = matRad_importDicomWidget();
 
 else
-    matRad_importDicomWidget();
+matRad_importDicomWidget();
 end
 end

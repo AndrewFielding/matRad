@@ -544,9 +544,14 @@ classdef MatRad_Config < handle
                 obj.envVersion = OCTAVE_VERSION;
             else
                 obj.env = 'MATLAB';
-                vData = ver(obj.env);
-                obj.envVersion = vData.Version;
-
+                %vData = ver(obj.env);
+                verString = version; % This returns the MATLAB version as a string
+                versionParts = regexp(verString, '\d+\.\d+', 'match');
+                if ~isempty(versionParts)
+                    vData = str2double(versionParts{1});
+                else
+                    vData = NaN;  % Return NaN if version parsing fails
+                end
             end
         end
 

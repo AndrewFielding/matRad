@@ -97,7 +97,7 @@ classdef matRad_TopasMCEngine < DoseEngines.matRad_MonteCarloEngineAbstract
             'defaultModelCarbon',{{'LEM'}},...
             'LET',false,...
             'sharedSubscorers',true,...
-            'outputType','binary',... %'csv'; 'binary';%
+            'outputType','csv',... %'csv'; 'binary';%
             ... % This variable is only used for physicalDose, since for now it adds unnecessary computation time
             'reportQuantity',{{'Sum','Standard_Deviation'}});         % 'reportQuantity',{{'Sum'}});
         scorerRBEmodelOrderForEvaluation = {'MCN','WED','LEM','libamtrack'};
@@ -109,9 +109,9 @@ classdef matRad_TopasMCEngine < DoseEngines.matRad_MonteCarloEngineAbstract
         %Physics
         electronProductionCut = 0.5; %in mm
         radiationMode;
-        modules_protons     = {'g4em-standard_opt4','g4h-phy_QGSP_BIC_HP','g4decay','g4h-elastic_HP','g4stopping','g4ion-QMD','g4radioactivedecay'};
-        modules_GenericIon  = {'g4em-standard_opt4','g4h-phy_QGSP_BIC_HP','g4decay','g4h-elastic_HP','g4stopping','g4ion-QMD','g4radioactivedecay'};
-        modules_photons       = {'g4em-standard_opt4','g4h-phy_QGSP_BIC_HP','g4decay'};
+        modules_protons     = {'g4em-standard_opt4','g4h-phy_QGSP_BIC_AllHP','g4decay','g4h-elastic_HP','g4stopping','g4ion-QMD','g4radioactivedecay'};
+        modules_GenericIon  = {'g4em-standard_opt4','g4h-phy_QGSP_BIC_AllHP','g4decay','g4h-elastic_HP','g4stopping','g4ion-QMD','g4radioactivedecay'};
+        modules_photons       = {'g4em-standard_opt4','g4h-phy_QGSP_BIC_AllHP','g4decay'};
 
         %Geometry / World
         worldMaterial = 'G4_AIR';
@@ -190,7 +190,7 @@ classdef matRad_TopasMCEngine < DoseEngines.matRad_MonteCarloEngineAbstract
             %Let's set some default commands taken from topas installation
             %instructions for mac & debain/ubuntu
             if ispc %We assume topas is installed in wsl (since no windows version)
-                this.topasExecCommand = 'wsl export TOPAS_G4_DATA_DIR=~/G4Data; ~/topas/bin/topas';
+                this.topasExecCommand = 'wsl export TOPAS_G4_DATA_DIR=~Applications/GEANT4/G4DATA; topas';
             elseif ismac
                 this.topasExecCommand = 'export TOPAS_G4_DATA_DIR=/Applications/G4Data; export QT_QPA_PLATFORM_PLUGIN_PATH=/Applications/topas/Frameworks; /Applications/topas/bin/topas';
             elseif isunix
